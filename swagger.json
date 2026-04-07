@@ -1,0 +1,775 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "Id": {
+        "type": "integer",
+        "format": "int32",
+        "example": 1
+      },
+      "UrlType": {
+        "type": "string",
+        "example": "https://example.com/...",
+        "format": "url",
+        "pattern": "^https?://.+"
+      },
+      "User": {
+        "properties": {
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "teamId": {
+            "type": "string"
+          },
+          "image": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UrlType"
+              }
+            ],
+            "nullable": true
+          },
+          "description": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        },
+        "required": [
+          "updatedAt",
+          "createdAt",
+          "teamId",
+          "image",
+          "description",
+          "nickname",
+          "id"
+        ],
+        "type": "object"
+      },
+      "UserDetail": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/User"
+          },
+          {
+            "properties": {
+              "mostFavoriteCategory": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "$ref": "#/components/schemas/Id"
+                  }
+                },
+                "required": ["name", "id"],
+                "type": "object",
+                "nullable": true
+              },
+              "averageRating": {
+                "type": "number",
+                "format": "double"
+              },
+              "reviewCount": {
+                "type": "number",
+                "format": "double"
+              },
+              "followeesCount": {
+                "type": "number",
+                "format": "double"
+              },
+              "followersCount": {
+                "type": "number",
+                "format": "double"
+              },
+              "isFollowing": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "mostFavoriteCategory",
+              "averageRating",
+              "reviewCount",
+              "followeesCount",
+              "followersCount",
+              "isFollowing"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "Nickname": {
+        "type": "string",
+        "example": "닉네임",
+        "minLength": 1,
+        "maxLength": 20
+      },
+      "UpdateUserRequestBody": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "안녕하세요",
+            "maxLength": 300
+          },
+          "nickname": {
+            "$ref": "#/components/schemas/Nickname"
+          },
+          "image": {
+            "$ref": "#/components/schemas/UrlType"
+          }
+        },
+        "type": "object"
+      },
+      "UserRanking": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/User"
+          },
+          {
+            "properties": {
+              "reviewCount": {
+                "type": "number",
+                "format": "double"
+              },
+              "followersCount": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": ["reviewCount", "followersCount"],
+            "type": "object"
+          }
+        ]
+      },
+      "ProductListType": {
+        "properties": {
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "writerId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "categoryId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "favoriteCount": {
+            "type": "number",
+            "format": "double"
+          },
+          "reviewCount": {
+            "type": "number",
+            "format": "double"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "image": {
+            "$ref": "#/components/schemas/UrlType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        },
+        "required": [
+          "updatedAt",
+          "createdAt",
+          "writerId",
+          "categoryId",
+          "favoriteCount",
+          "reviewCount",
+          "rating",
+          "image",
+          "name",
+          "id"
+        ],
+        "type": "object"
+      },
+      "CursorBasedPaginationResponse_ProductListType_": {
+        "properties": {
+          "nextCursor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "list": {
+            "items": {
+              "$ref": "#/components/schemas/ProductListType"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["nextCursor", "list"],
+        "type": "object"
+      },
+      "CursorBasedPaginationResponse__id-number--followee-User__": {
+        "properties": {
+          "nextCursor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "list": {
+            "items": {
+              "properties": {
+                "followee": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "id": {
+                  "type": "number",
+                  "format": "double"
+                }
+              },
+              "required": ["followee", "id"],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["nextCursor", "list"],
+        "type": "object"
+      },
+      "CursorBasedPaginationResponse__id-number--follower-User__": {
+        "properties": {
+          "nextCursor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "list": {
+            "items": {
+              "properties": {
+                "follower": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "id": {
+                  "type": "number",
+                  "format": "double"
+                }
+              },
+              "required": ["follower", "id"],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["nextCursor", "list"],
+        "type": "object"
+      },
+      "Review": {
+        "properties": {
+          "user": {
+            "properties": {
+              "image": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UrlType"
+                  }
+                ],
+                "nullable": true
+              },
+              "nickname": {
+                "type": "string"
+              },
+              "id": {
+                "$ref": "#/components/schemas/Id"
+              }
+            },
+            "required": ["image", "nickname", "id"],
+            "type": "object"
+          },
+          "reviewImages": {
+            "items": {
+              "properties": {
+                "source": {
+                  "$ref": "#/components/schemas/UrlType"
+                },
+                "id": {
+                  "$ref": "#/components/schemas/Id"
+                }
+              },
+              "required": ["source", "id"],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "productId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "userId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isLiked": {
+            "type": "boolean"
+          },
+          "likeCount": {
+            "type": "number",
+            "format": "double"
+          },
+          "content": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        },
+        "required": [
+          "user",
+          "reviewImages",
+          "productId",
+          "userId",
+          "updatedAt",
+          "createdAt",
+          "isLiked",
+          "likeCount",
+          "content",
+          "rating",
+          "id"
+        ],
+        "type": "object"
+      },
+      "Rating": {
+        "type": "number",
+        "format": "float",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "ReviewContent": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300
+      },
+      "CreateReviewRequestBody": {
+        "properties": {
+          "productId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "images": {
+            "items": {
+              "$ref": "#/components/schemas/UrlType"
+            },
+            "type": "array",
+            "description": "이미지 URL 입니다. 최대 3개까지 가능합니다.",
+            "maxItems": 3
+          },
+          "content": {
+            "$ref": "#/components/schemas/ReviewContent"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/Rating"
+          }
+        },
+        "required": ["productId", "content", "rating"],
+        "type": "object"
+      },
+      "UpdateReviewRequestBody": {
+        "properties": {
+          "images": {
+            "items": {
+              "anyOf": [
+                {
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/Id"
+                    }
+                  },
+                  "required": ["id"],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "source": {
+                      "$ref": "#/components/schemas/UrlType"
+                    }
+                  },
+                  "required": ["source"],
+                  "type": "object"
+                }
+              ]
+            },
+            "type": "array",
+            "description": "기존 이미지를 유지하려면 id를, 새로운 이미지를 추가하려면 source를 넣어주세요. <br />\n요청에 포함되지 않는 기존 이미지는 삭제됩니다.",
+            "maxItems": 3
+          },
+          "content": {
+            "$ref": "#/components/schemas/ReviewContent"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/Rating"
+          }
+        },
+        "type": "object"
+      },
+      "SearchProductResponse": {
+        "$ref": "#/components/schemas/CursorBasedPaginationResponse_ProductListType_"
+      },
+      "ProductDetailType": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductListType"
+          },
+          {
+            "properties": {
+              "categoryMetric": {
+                "properties": {
+                  "reviewCount": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "favoriteCount": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "rating": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                },
+                "required": ["reviewCount", "favoriteCount", "rating"],
+                "type": "object",
+                "description": "동일 카테고리 지표"
+              },
+              "category": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "$ref": "#/components/schemas/Id"
+                  }
+                },
+                "required": ["name", "id"],
+                "type": "object"
+              },
+              "isFavorite": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "categoryMetric",
+              "category",
+              "isFavorite",
+              "description"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ProductName": {
+        "type": "string",
+        "example": "상품 이름",
+        "description": "상품 이름",
+        "minLength": 1,
+        "maxLength": 20
+      },
+      "ProductDescription": {
+        "type": "string",
+        "example": "상품 설명, 최소 10자 이상, 최대 500자 이하",
+        "description": "상품 설명",
+        "minLength": 10,
+        "maxLength": 500
+      },
+      "CreateProductRequestBody": {
+        "properties": {
+          "categoryId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "image": {
+            "$ref": "#/components/schemas/UrlType"
+          },
+          "description": {
+            "$ref": "#/components/schemas/ProductDescription"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ProductName"
+          }
+        },
+        "required": ["categoryId", "image", "description", "name"],
+        "type": "object"
+      },
+      "UpdateProductRequestBody": {
+        "properties": {
+          "categoryId": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "image": {
+            "$ref": "#/components/schemas/UrlType"
+          },
+          "description": {
+            "$ref": "#/components/schemas/ProductDescription"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ProductName"
+          }
+        },
+        "required": ["categoryId", "image", "description", "name"],
+        "type": "object"
+      },
+      "CursorBasedPaginationResponse_Review_": {
+        "properties": {
+          "nextCursor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "list": {
+            "items": {
+              "$ref": "#/components/schemas/Review"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["nextCursor", "list"],
+        "type": "object"
+      },
+      "ListReviewResponse": {
+        "$ref": "#/components/schemas/CursorBasedPaginationResponse_Review_"
+      },
+      "OauthApp": {
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appKey": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "teamId": {
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        },
+        "required": [
+          "createdAt",
+          "updatedAt",
+          "appKey",
+          "provider",
+          "teamId",
+          "id"
+        ],
+        "type": "object"
+      },
+      "OauthProvider": {
+        "type": "string",
+        "enum": ["google", "kakao"]
+      },
+      "UpsertOauthAppRequestBody": {
+        "properties": {
+          "appKey": {
+            "type": "string",
+            "description": "간편 로그인을 위한 인증 키 입니다.\nGoogle 의 경우에는 \"클라이언트 id\" 입니다.\nKakao 의 경우에는 \"REST API 키\" 입니다.\n실습을 위해 발급받은 키를 등록해주세요. 실제 서비스에서 사용 하는 키는 등록하시면 안됩니다."
+          },
+          "provider": {
+            "$ref": "#/components/schemas/OauthProvider"
+          }
+        },
+        "required": ["appKey", "provider"],
+        "type": "object"
+      },
+      "FollowRequestBody": {
+        "properties": {
+          "userId": {
+            "$ref": "#/components/schemas/Id",
+            "description": "팔로우할 유저의 id"
+          }
+        },
+        "required": ["userId"],
+        "type": "object"
+      },
+      "Category": {
+        "properties": {
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        },
+        "required": ["updatedAt", "createdAt", "name", "id"],
+        "type": "object"
+      },
+      "Email": {
+        "type": "string",
+        "example": "example@email.com",
+        "format": "email",
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      },
+      "SignUpResponse": {
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "user": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              },
+              {
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/Email"
+                  }
+                },
+                "required": ["email"],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": ["accessToken", "user"],
+        "type": "object"
+      },
+      "Password": {
+        "type": "string",
+        "example": "password",
+        "minLength": 8,
+        "pattern": "^([a-z]|[A-Z]|[0-9]|[!@#$%^&*])+$"
+      },
+      "SignUpRequestBody": {
+        "properties": {
+          "passwordConfirmation": {
+            "$ref": "#/components/schemas/Password"
+          },
+          "password": {
+            "$ref": "#/components/schemas/Password"
+          },
+          "nickname": {
+            "$ref": "#/components/schemas/Nickname"
+          },
+          "email": {
+            "$ref": "#/components/schemas/Email"
+          }
+        },
+        "required": ["passwordConfirmation", "password", "nickname", "email"],
+        "type": "object"
+      },
+      "SignInResponse": {
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "user": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              },
+              {
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/Email"
+                  }
+                },
+                "required": ["email"],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": ["accessToken", "user"],
+        "type": "object"
+      },
+      "SignInRequestBody": {
+        "properties": {
+          "password": {
+            "$ref": "#/components/schemas/Password"
+          },
+          "email": {
+            "$ref": "#/components/schemas/Email"
+          }
+        },
+        "required": ["password", "email"],
+        "type": "object"
+      },
+      "OauthToken": {
+        "type": "string",
+        "description": "간편 로그인 과정을 통해 발급받은 토큰입니다.<br />\nGoogle 의 경우에는 <b>Google Id 토큰</b>(JWT) 입니다.<br/>\nKakao 의 경우에는 <b>인가 코드</b> 입니다."
+      },
+      "SignInWithOauthRequestBody": {
+        "properties": {
+          "redirectUri": {
+            "type": "string",
+            "description": "Kakao 의 경우에는 필수입니다.<br/>\n인가 코드를 얻을 때 사용하였던 redirect_uri 값을 그대로 사용합니다.",
+            "example": "http://localhost:3000/oauth/kakao"
+          },
+          "token": {
+            "$ref": "#/components/schemas/OauthToken"
+          }
+        },
+        "required": ["token"],
+        "type": "object"
+      },
+      "SignUpWithOauthRequestBody": {
+        "allOf": [
+          {
+            "properties": {
+              "nickname": {
+                "$ref": "#/components/schemas/Nickname"
+              }
+            },
+            "required": ["nickname"],
+            "type": "object"
+          },
+          {
+            "$ref": "#/components/schemas/SignInWithOauthRequestBody"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
