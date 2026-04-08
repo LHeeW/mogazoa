@@ -13,12 +13,12 @@ export default function AuthInput({
   type,
   ...props
 }: AuthInputProps) {
-  const [isVisible, setisVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const currentType = type === "password" && isVisible ? "text" : type;
 
   const handleVisibleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setisVisible((prev) => !prev);
+    setIsVisible((prev) => !prev);
   };
 
   return (

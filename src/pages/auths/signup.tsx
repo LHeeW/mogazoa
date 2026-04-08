@@ -21,7 +21,7 @@ export default function SignupPage() {
       <AuthInput
         label="닉네임"
         type="text"
-        id="text"
+        id="nickname"
         placeholder="닉네임을 입력해주세요."
         error={errors.nickname?.message}
         {...register("nickname")}
