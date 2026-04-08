@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import PublicGaurd from "../middlewares/public-guard";
-import LoginPage from "../pages/login";
-import SignupPage from "../pages/signup";
+import LoginPage from "../pages/auths/login";
+import SignupPage from "../pages/auths/signup";
 import PrivateGuard from "../middlewares/private-guard";
 import HomePage from "../pages/home";
 import MainLayout from "../layouts/main-layout";

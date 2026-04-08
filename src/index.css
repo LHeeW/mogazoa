@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-tablet: 744px;
+  --breakpoint-desktop: 1440px;
+
   --color-black-1c1c22: #1c1c22;
   --color-black-252530: #252530;
   --color-black-353542: #353542;
@@ -23,4 +26,12 @@
     #5097fa,
     #5363ff
   );
+}
+
+body {
+  background-color: var(--color-black-1c1c22);
+}
+
+#root {
+  min-height: 100vh;
 }
