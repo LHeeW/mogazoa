@@ -39,7 +39,7 @@ export default function AuthInput({
           <button
             type="button"
             onClick={handleVisibleToggle}
-            className="absolute top-1/2 right-3 -translate-y-1/2 w-6 h-6 text-gray-6e6e82"
+            className="absolute top-1/2 right-3 -translate-y-1/2 w-6 h-6 text-gray-6e6e82 cursor-pointer"
           >
             {isVisible ? <VisibleIcon /> : <InvisibleIcon />}
           </button>
