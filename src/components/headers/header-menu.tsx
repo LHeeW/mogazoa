@@ -26,6 +26,7 @@ export default function HeaderMenu() {
           <button
             onClick={toggleMenu}
             type="button"
+            aria-label="메뉴 닫기"
             className="p-1 text-white-f1f1f5 cursor-pointer"
           >
             X

@@ -11,7 +11,7 @@ export default function HeaderSearch({ isSearchOpen, onToggleSearch }: Props) {
       className={`flex items-center justify-end ${isSearchOpen && "flex-1"}`}
     >
       <div
-        className={`overflow-hidden transition-left duration-100 ease-in-out tablet:w-72 tablet:opacity-100 tablet:ml-0 ${
+        className={`overflow-hidden transition-all duration-100 ease-in-out tablet:w-72 tablet:opacity-100 tablet:ml-0 ${
           isSearchOpen ? "w-full ml-4 max-w-70 opacity-100" : "w-0 opacity-0"
         } desktop:w-100`}
       >
@@ -25,6 +25,7 @@ export default function HeaderSearch({ isSearchOpen, onToggleSearch }: Props) {
       <button
         type="button"
         onClick={onToggleSearch}
+        aria-label={`${isSearchOpen ? "닫기" : "검색"}`}
         className="w-6 h-6 cursor-pointer text-gray-9fa6b2 tablet:hidden"
       >
         {isSearchOpen ? "X" : <SearchIcon />}
